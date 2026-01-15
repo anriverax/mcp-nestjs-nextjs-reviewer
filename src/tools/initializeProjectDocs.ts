@@ -81,6 +81,62 @@ const DOC_DEFINITIONS: DocDefinition[] = [
 	},
 ];
 
+/**
+ * Detect project root by searching for package.json up the directory tree
+ */
+export async function detectProjectRoot(startPath: string = process.cwd()): Promise<string | null> {
+	let currentPath = resolve(startPath);
+
+	// Limit search to 10 levels up to avoid infinite loops
+	for (let i = 0; i < 10; i++) {
+		try {
+			const packageJsonPath = join(currentPath, 'package.json');
+			await fs.access(packageJsonPath);
+			return currentPath;
+		} catch {
+			const parentPath = resolve(currentPath, '..');
+			if (parentPath === currentPath) {
+				// Reached filesystem root
+				return null;
+			}
+			currentPath = parentPath;
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Initialize project docs automatically, silently (no console output)
+ * Used by all analysis tools to automatically create docs on first execution
+ */
+export async function autoInitializeProjectDocs(): Promise<void> {
+	try {
+		const projectRoot = await detectProjectRoot();
+
+		if (!projectRoot) {
+			// No project found, skip silently
+			return;
+		}
+
+		const docsDir = join(projectRoot, 'docs');
+
+		// Check if docs already exist
+		try {
+			await fs.access(docsDir);
+			// Docs folder already exists, skip
+			return;
+		} catch {
+			// Docs don't exist, create them
+		}
+
+		// Initialize docs in the project
+		await initializeDocsInPath(projectRoot);
+	} catch {
+		// Silent failure - don't interfere with tool execution
+	}
+}
+
 async function initializeDocsInPath(projectRoot: string): Promise<string> {
 	try {
 		const docsDir = join(projectRoot, 'docs');
