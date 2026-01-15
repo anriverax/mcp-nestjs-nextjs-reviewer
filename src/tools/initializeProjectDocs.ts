@@ -97,18 +97,18 @@ export async function initializeProjectDocs(): Promise<void> {
 			try {
 				await fs.access(filePath);
 				// El archivo existe, no lo sobrescribimos
-				console.log(`[MCP] Documentación encontrada: ${doc.filename}`);
+				console.error(`[MCP] Documentación encontrada: ${doc.filename}`);
 			} catch {
 				// El archivo no existe, lo creamos
 				await fs.writeFile(filePath, content, 'utf-8');
-				console.log(`[MCP] Documentación creada: ${doc.filename}`);
+				console.error(`[MCP] Documentación creada: ${doc.filename}`);
 			}
 		}
 
 		// Crear un índice de documentación
 		await createDocsIndex(docsDir);
 
-		console.log(`[MCP] Carpeta de documentación inicializada en: ${docsDir}`);
+		console.error(`[MCP] Carpeta de documentación inicializada en: ${docsDir}`);
 	} catch (error) {
 		console.error('[MCP] Error al inicializar documentación:', error);
 	}
@@ -167,10 +167,10 @@ ${nextjsLinks}
 		await fs.access(indexPath);
 		// El archivo existe, lo actualizamos con la nueva fecha
 		await fs.writeFile(indexPath, indexContent, 'utf-8');
-		console.log('[MCP] Índice de documentación actualizado: README.md');
+		console.error('[MCP] Índice de documentación actualizado: README.md');
 	} catch {
 		// El archivo no existe, lo creamos
 		await fs.writeFile(indexPath, indexContent, 'utf-8');
-		console.log('[MCP] Índice de documentación creado: README.md');
+		console.error('[MCP] Índice de documentación creado: README.md');
 	}
 }
