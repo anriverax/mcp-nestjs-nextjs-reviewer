@@ -125,7 +125,43 @@ npm run build
 
 ## ⚙️ Configure MCP Server in VS Code
 
-### Step 1: Open VS Code Settings JSON directly
+### ⭐ Easy Setup (Recommended for Multi-Machine)
+
+If you work on **multiple machines** (home, office, laptop), use this automated setup:
+
+```bash
+npm install
+npm run build
+npm run setup:mcp
+```
+
+This script will:
+
+1. **Automatically detect which machine you're on** by your username
+2. **Detect your OS** (Windows, macOS, Linux)
+3. **Find the correct VS Code configuration folder**
+4. **Create the appropriate server** with the correct path:
+   - HOME machine (user `USER`) → `home-nestjs-nextjs-reviewer`
+   - OFFICE machine (user `AnibalAntonioRivera`) → `office-nestjs-nextjs-reviewer`
+
+### How it works
+
+The setup script detects your machine by your system username and creates the correct path automatically:
+
+| Machine | Username              | Path                                                                          | Server Name                     |
+| ------- | --------------------- | ----------------------------------------------------------------------------- | ------------------------------- |
+| HOME    | `USER`                | `C:\Users\USER\Code\mcp-nestjs-nextjs-reviewer\dist\server.js`                | `home-nestjs-nextjs-reviewer`   |
+| OFFICE  | `AnibalAntonioRivera` | `C:\Users\AnibalAntonioRivera\code\mcp-nestjs-nextjs-reviewer\dist\server.js` | `office-nestjs-nextjs-reviewer` |
+
+Just run the setup script on each machine—it will automatically detect your environment and configure the correct server with the right path!
+
+**No manual path changes needed ever again!**
+
+---
+
+### Manual Setup (If you prefer)
+
+#### Step 1: Open VS Code Settings JSON directly
 
 **Easiest way - Using keyboard shortcut:**
 
@@ -141,7 +177,7 @@ This will open your `settings.json` file directly in the editor.
 2. Press `Ctrl + ,` (or `Cmd + ,` on Mac) to open Settings
 3. Click the **{}** icon in the top-right corner to open the JSON editor
 
-### Step 2: Find the MCP configuration file location
+#### Step 2: Find the MCP configuration file location
 
 **On Windows:**
 
@@ -166,9 +202,9 @@ These folders contain:
 - `settings.json` - General VS Code settings
 - `mcp.json` - MCP server configuration (create if it doesn't exist)
 
-### Step 3: Add MCP Server configuration
+#### Step 3: Add MCP Server configuration
 
-### Create/Update `mcp.json` in the User folder (Recommended for MCP)
+#### Create/Update `mcp.json` in the User folder (Recommended for MCP)
 
 1. Navigate to the User folder (see paths above)
 2. Create a new file named `mcp.json` (if it doesn't exist)
@@ -225,7 +261,7 @@ C:\Users\USER\AppData\Roaming\Code\User\mcp.json
 }
 ```
 
-### Step 4: Restart VS Code completely
+#### Step 4: Restart VS Code completely
 
 **Save the mcp.json file and then:**
 
@@ -234,21 +270,24 @@ C:\Users\USER\AppData\Roaming\Code\User\mcp.json
 
 This ensures the MCP server configuration is properly loaded.
 
-### Step 5: Activate the MCP Server in VS Code
+#### Step 5: Activate the MCP Server in VS Code
 
 1. Open **Command Palette** in VS Code: `Ctrl + Shift + P` (Windows/Linux) or `Cmd + Shift + P` (Mac)
 2. Type: `MCP: List Servers` or `MCP: Manage Servers`
-3. You should see `nestjs-nextjs-reviewer` in the list
+3. You should see your server in the list:
+   - `home-nestjs-nextjs-reviewer` (if configured via setup:mcp)
+   - `office-nestjs-nextjs-reviewer` (if configured via setup:mcp)
+   - Or `nestjs-nextjs-reviewer` (if manual setup)
 4. Click on it to **enable/activate** it (if it shows as disabled)
 5. Confirm that the status shows as **✅ Connected** or **Enabled**
 
-### Step 6: Verify the configuration
+#### Step 6: Verify the configuration
 
 1. Open **Copilot Chat** (Ctrl + Shift + I)
-2. Type: `@nestjs-nextjs-reviewer` and press Space
+2. Type: `@home-nestjs-nextjs-reviewer` or `@office-nestjs-nextjs-reviewer` and press Space
 3. You should see the available tools listed
 
-### Step 7: Start using the tools
+#### Step 7: Start using the tools
 
 Once configured and activated, you can use any of the available tools:
 
@@ -266,9 +305,13 @@ Once configured and activated, you can use any of the available tools:
 1. Ensure the MCP Server is configured (see above)
 2. Restart VS Code
 3. Open **Copilot Chat** (Ctrl + Shift + I)
-4. Type:
+4. Type (depending on your machine):
    ```
-   @nestjs-nextjs-reviewer review_nestjs_code
+   @home-nestjs-nextjs-reviewer review_nestjs_code
+   ```
+   or
+   ```
+   @office-nestjs-nextjs-reviewer review_nestjs_code
    ```
 5. Select the code you want reviewed
 6. The tool will analyze it and return feedback in Markdown
@@ -336,6 +379,108 @@ All tools return **structured Markdown** with:
 - **Code Examples** - Before and after
 - **Recommendations** - Actionable steps
 - **Impact Assessment** - Why it matters
+
+---
+
+## 💾 Auto-Save Analysis Results
+
+All analysis results are **automatically saved as Markdown files** in your project's `docs/` folder.
+
+### How it works
+
+1. When you run any analysis tool, the output is displayed in VS Code's Copilot Chat
+2. **At the same time**, a `.md` file is automatically created in the `docs/` folder
+3. The file is named with a timestamp: `{framework}_{analysis-type}_{YYYY-MM-DD_HH-mm-ss}.md`
+
+### Example file structure
+
+```
+your-project/
+├── docs/
+│   ├── nestjs_architecture_2025-01-15_14-30-45.md
+│   ├── nextjs_review_2025-01-15_14-35-22.md
+│   ├── nestjs_security-review_2025-01-15_14-40-18.md
+│   └── general_jsdoc-docs_2025-01-15_14-45-00.md
+├── src/
+├── package.json
+└── ...
+```
+
+### File naming convention
+
+- **Framework:** `nestjs` or `nextjs` (or `general` for cross-cutting tools)
+- **Analysis type:** `review`, `architecture`, `security-review`, `code-smells`, `ddd-boundary-check`, `hexagonal-check`, `jsdoc-docs`, `performance-review`
+- **Timestamp:** `YYYY-MM-DD_HH-mm-ss` format
+
+### Using saved files
+
+1. Open the `docs/` folder in your project
+2. Review the generated `.md` files
+3. Share them with your team as code review artifacts
+4. Use them to track improvements over time
+5. Reference specific findings in pull requests
+
+### Note
+
+The `docs/` folder is automatically added to `.gitignore` to avoid committing generated files. If you want to commit them, remove `docs` from `.gitignore`.
+
+---
+
+## � Automatic Project Documentation Initialization
+
+### What is this feature?
+
+When you run the MCP in your project, it **automatically creates a `docs` folder** with markdown templates for all supported analysis types. This works for any project where you use the MCP: `primeraInfancia`, `coffee`, or any other project.
+
+### How it works
+
+1. **First run**: MCP creates a `docs/` folder in your project root with template files for all analysis types
+2. **Subsequent runs**:
+   - Existing files are preserved (your edits are safe)
+   - `README.md` is updated with the current timestamp
+   - Missing files are recreated if deleted
+
+### Generated documentation structure
+
+```
+your-project/
+├── docs/
+│   ├── README.md (documentation index)
+│   │
+│   ├── NestJS Analysis/
+│   ├── nestjs-review.md
+│   ├── nestjs-architecture.md
+│   ├── nestjs-code-smells.md
+│   ├── nestjs-security.md
+│   ├── nestjs-ddd.md
+│   ├── nestjs-hexagonal.md
+│   │
+│   └── Next.js Analysis/
+│   ├── nextjs-review.md
+│   ├── nextjs-architecture.md
+│   ├── nextjs-code-smells.md
+│   ├── nextjs-security.md
+│   └── nextjs-performance.md
+```
+
+### Example usage
+
+When you run the MCP server in your project, you'll see:
+
+```
+[MCP] Documentación creada: nestjs-review.md
+[MCP] Documentación creada: nestjs-architecture.md
+...
+[MCP] Carpeta de documentación inicializada en: /ruta/a/tu/proyecto/docs
+```
+
+### Editing generated files
+
+All files in the `docs/` folder can be safely edited. Your changes will be preserved in future MCP executions. Only the `README.md` index will be automatically updated.
+
+### Git Integration
+
+The `docs/` folder is typically ignored by git (add to `.gitignore`), but you can track it if you want to maintain documentation history in your repository.
 
 ---
 
