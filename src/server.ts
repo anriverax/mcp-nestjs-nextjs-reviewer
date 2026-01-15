@@ -13,7 +13,7 @@ import { securityNextjsReviewTool } from './tools/nextjs/securityReview.js';
 import { detectNextjsCodeSmellsTool } from './tools/nextjs/detectCodeSmells.js';
 import { hexagonalCheckTool } from './tools/nestjs/hexagonalCheck.js';
 import { dddBoundaryCheckTool } from './tools/nestjs/dddBoundaryCheck.js';
-import { initializeProjectDocs } from './tools/initializeProjectDocs.js';
+import { initializeProjectDocsTool } from './tools/initializeProjectDocs.js';
 
 const server = new McpServer({
 	name: 'nestjs-mcp-reviewer',
@@ -126,8 +126,14 @@ server.registerTool(
 	generateDocsTool.execute
 );
 
-// Inicializar documentación del proyecto al arrancar
-await initializeProjectDocs();
+server.registerTool(
+	initializeProjectDocsTool.name,
+	{
+		description: initializeProjectDocsTool.description,
+		inputSchema: initializeProjectDocsTool.inputSchema,
+	},
+	initializeProjectDocsTool.execute
+);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

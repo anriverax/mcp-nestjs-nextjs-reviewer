@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import { join, resolve } from 'path';
+import { z } from 'zod';
 
 interface DocDefinition {
 	filename: string;
@@ -80,10 +81,8 @@ const DOC_DEFINITIONS: DocDefinition[] = [
 	},
 ];
 
-export async function initializeProjectDocs(): Promise<void> {
+async function initializeDocsInPath(projectRoot: string): Promise<string> {
 	try {
-		// Obtener el directorio de trabajo actual
-		const projectRoot = process.cwd();
 		const docsDir = join(projectRoot, 'docs');
 
 		// Crear la carpeta docs si no existe
@@ -108,9 +107,15 @@ export async function initializeProjectDocs(): Promise<void> {
 		// Crear un índice de documentación
 		await createDocsIndex(docsDir);
 
-		console.error(`[MCP] Carpeta de documentación inicializada en: ${docsDir}`);
+		const message = `✅ Carpeta de documentación inicializada en: ${docsDir}`;
+		console.error(`[MCP] ${message}`);
+		return message;
 	} catch (error) {
-		console.error('[MCP] Error al inicializar documentación:', error);
+		const errorMessage = `❌ Error al inicializar documentación: ${
+			error instanceof Error ? error.message : String(error)
+		}`;
+		console.error(`[MCP] ${errorMessage}`);
+		throw error;
 	}
 }
 
@@ -174,3 +179,41 @@ ${nextjsLinks}
 		console.error('[MCP] Índice de documentación creado: README.md');
 	}
 }
+
+export const initializeProjectDocsTool = {
+	name: 'initialize_project_docs',
+	description:
+		'Initialize documentation structure in your project. Creates a docs/ folder with templates for all NestJS and Next.js analysis types. Use this in your project root directory.',
+	inputSchema: z.object({
+		projectPath: z
+			.string()
+			.describe(
+				'The path to your project root (e.g., /path/to/myproject, C:\\Users\\YourName\\projects\\myproject)'
+			),
+	}),
+
+	async execute({ projectPath }: { projectPath: string }, _extra: any) {
+		try {
+			const result = await initializeDocsInPath(projectPath);
+			return {
+				content: [
+					{
+						type: 'text' as const,
+						text: `# Documentation Initialization\n\n${result}\n\n## What was created:\n\n- **docs/README.md** - Index of all documentation\n- **docs/nestjs-*.md** - NestJS analysis templates\n- **docs/nextjs-*.md** - Next.js analysis templates\n\n## Next steps:\n\n1. The docs folder is now ready in your project\n2. You can safely edit these files - they won't be overwritten\n3. Run analysis tools to populate the documentation with results`,
+					},
+				],
+			};
+		} catch (error) {
+			return {
+				content: [
+					{
+						type: 'text' as const,
+						text: `# Error\n\nFailed to initialize documentation: ${
+							error instanceof Error ? error.message : String(error)
+						}`,
+					},
+				],
+			};
+		}
+	},
+};
