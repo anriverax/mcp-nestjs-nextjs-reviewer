@@ -430,17 +430,33 @@ The `docs/` folder is automatically added to `.gitignore` to avoid committing ge
 
 ### What is this feature?
 
-When you run the MCP in your project, it **automatically creates a `docs` folder** with markdown templates for all supported analysis types. This works for any project where you use the MCP: `primeraInfancia`, `coffee`, or any other project.
+When you initialize the MCP in your project, it creates a `docs` folder with markdown templates for all supported analysis types. This works for any project where you use the MCP: `primeraInfancia`, `coffee`, or any other project.
 
-### How it works
+### How to use it
 
-1. **First run**: MCP creates a `docs/` folder in your project root with template files for all analysis types
-2. **Subsequent runs**:
-   - Existing files are preserved (your edits are safe)
-   - `README.md` is updated with the current timestamp
-   - Missing files are recreated if deleted
+1. Open **Copilot Chat** in VS Code (Ctrl + Shift + I)
+2. Use the `initialize_project_docs` tool with your project path
+3. The tool will create a `docs/` folder in your project
 
-### Generated documentation structure
+**Example usage:**
+
+```
+@office-nestjs-nextjs-reviewer initialize_project_docs
+
+projectPath: C:\Users\YourName\code\myproject
+```
+
+Or on Mac/Linux:
+
+```
+@office-nestjs-nextjs-reviewer initialize_project_docs
+
+projectPath: /Users/yourname/code/myproject
+```
+
+### What gets created
+
+The first time you run the tool, it creates:
 
 ```
 your-project/
@@ -463,24 +479,24 @@ your-project/
 │   └── nextjs-performance.md
 ```
 
-### Example usage
+### On subsequent runs
 
-When you run the MCP server in your project, you'll see:
-
-```
-[MCP] Documentación creada: nestjs-review.md
-[MCP] Documentación creada: nestjs-architecture.md
-...
-[MCP] Carpeta de documentación inicializada en: /ruta/a/tu/proyecto/docs
-```
+- Existing files are preserved (your edits are safe)
+- `README.md` is updated with the current timestamp
+- Missing files are recreated if deleted
 
 ### Editing generated files
 
-All files in the `docs/` folder can be safely edited. Your changes will be preserved in future MCP executions. Only the `README.md` index will be automatically updated.
+All files in the `docs/` folder can be safely edited. Your changes will be preserved in future runs. Only the `README.md` index will be automatically updated.
 
-### Git Integration
+### Why this approach?
 
-The `docs/` folder is typically ignored by git (add to `.gitignore`), but you can track it if you want to maintain documentation history in your repository.
+The tool accepts a **project path** parameter so it creates documentation in the correct project directory, not in the MCP server directory. This ensures:
+
+- ✅ Documentation is always in your project
+- ✅ Easy to commit to git with your project
+- ✅ Works with any project layout
+- ✅ No confusion about where files are created
 
 ---
 
