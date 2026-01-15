@@ -80,15 +80,6 @@ server.registerTool(
 	securityNextjsReviewTool.execute
 );
 
-server.registerTool(
-	dddBoundaryCheckTool.name,
-	{
-		description: dddBoundaryCheckTool.description,
-		inputSchema: dddBoundaryCheckTool.inputSchema,
-	},
-	dddBoundaryCheckTool.execute
-);
-
 /** others */
 
 server.registerTool(

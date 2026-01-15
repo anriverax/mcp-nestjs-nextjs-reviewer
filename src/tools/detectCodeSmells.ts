@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CODE_SMELLS_PROMPT } from '../prompts/smells.prompt.js';
+import { CODE_SMELLS_PROMPT } from '../prompts/nextjs/smells.prompt.js';
 import { MARKDOWN_OUTPUT_PROMPT } from '../prompts/base/markdown.prompt.js';
 
 export const detectCodeSmellsTool = {
