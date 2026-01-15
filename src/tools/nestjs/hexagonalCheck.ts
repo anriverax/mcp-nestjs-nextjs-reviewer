@@ -1,6 +1,6 @@
-import { HEXAGONAL_CHECK_PROMPT } from '../prompts/nestjs/hexagonal.prompt.js';
-import { MARKDOWN_OUTPUT_PROMPT } from '../prompts/base/markdown.prompt.js';
 import { z } from 'zod';
+import { HEXAGONAL_CHECK_PROMPT } from '../../prompts/nestjs/hexagonal.prompt.js';
+import { MARKDOWN_OUTPUT_PROMPT } from '../../prompts/base/markdown.prompt.js';
 
 export const hexagonalCheckTool = {
 	name: 'hexagonal_architecture_check',

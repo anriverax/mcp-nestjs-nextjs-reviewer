@@ -1,7 +1,6 @@
 import { z } from 'zod';
-import { DDD_BOUNDARY_PROMPT } from '../prompts/nestjs/ddd.prompt.js';
-import { MARKDOWN_OUTPUT_PROMPT } from '../prompts/base/markdown.prompt.js';
-
+import { MARKDOWN_OUTPUT_PROMPT } from '../../prompts/base/markdown.prompt.js';
+import { DDD_BOUNDARY_PROMPT } from '../../prompts/nestjs/ddd.prompt.js';
 export const dddBoundaryCheckTool = {
 	name: 'ddd_boundary_check',
 	description: 'Analyzes DDD boundary violations.',
