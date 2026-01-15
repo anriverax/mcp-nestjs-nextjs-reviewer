@@ -225,16 +225,32 @@ C:\Users\USER\AppData\Roaming\Code\User\mcp.json
 }
 ```
 
-### Step 4: Verify the configuration
+### Step 4: Restart VS Code completely
 
-1. **Restart VS Code completely** (close and reopen)
-2. Open **Copilot Chat** (Ctrl + Shift + I)
-3. Type: `@nestjs-nextjs-reviewer` and press Space
-4. You should see the available tools listed
+**Save the mcp.json file and then:**
 
-### Step 6: Start using the tools
+1. **Close VS Code completely** (exit the application)
+2. **Reopen VS Code**
 
-Once configured, you can use any of the available tools:
+This ensures the MCP server configuration is properly loaded.
+
+### Step 5: Activate the MCP Server in VS Code
+
+1. Open **Command Palette** in VS Code: `Ctrl + Shift + P` (Windows/Linux) or `Cmd + Shift + P` (Mac)
+2. Type: `MCP: List Servers` or `MCP: Manage Servers`
+3. You should see `nestjs-nextjs-reviewer` in the list
+4. Click on it to **enable/activate** it (if it shows as disabled)
+5. Confirm that the status shows as **✅ Connected** or **Enabled**
+
+### Step 6: Verify the configuration
+
+1. Open **Copilot Chat** (Ctrl + Shift + I)
+2. Type: `@nestjs-nextjs-reviewer` and press Space
+3. You should see the available tools listed
+
+### Step 7: Start using the tools
+
+Once configured and activated, you can use any of the available tools:
 
 - `review_nestjs_code`
 - `review_nextjs_code`
