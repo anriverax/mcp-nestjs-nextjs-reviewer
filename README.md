@@ -35,6 +35,17 @@ It **DOES**:
 
 ---
 
+## ⚠️ Important: Consistency & Reliability
+
+This MCP uses **deterministic prompts** designed to provide reproducible analysis. However, for **maximum consistency**, configure your Copilot Chat with:
+
+- **Temperature: 0** (ensures same outputs for same inputs)
+- **Top P: 1** (disables sampling randomness)
+
+See [CONSISTENCY_IMPROVEMENTS.md](CONSISTENCY_IMPROVEMENTS.md) for detailed configuration guide.
+
+---
+
 ## 🧠 Supported Frameworks
 
 | Framework | Scope                                      |
