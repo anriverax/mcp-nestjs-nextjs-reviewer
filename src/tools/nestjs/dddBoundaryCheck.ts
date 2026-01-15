@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { DDD_BOUNDARY_PROMPT } from '../prompts/ddd.prompt.js';
+import { DDD_BOUNDARY_PROMPT } from '../prompts/nestjs/ddd.prompt.js';
 import { MARKDOWN_OUTPUT_PROMPT } from '../prompts/base/markdown.prompt.js';
 
 export const dddBoundaryCheckTool = {

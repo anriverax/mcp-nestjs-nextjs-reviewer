@@ -2,9 +2,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { generateDocsTool } from './tools/generateDocs.js';
-import { detectCodeSmellsTool } from './tools/detectCodeSmells.js';
-import { hexagonalCheckTool } from './tools/hexagonalCheck.js';
-import { dddBoundaryCheckTool } from './tools/dddBoundaryCheck.js';
+import { detectCodeSmellsTool } from './tools/nestjs/detectCodeSmells.js';
 import { reviewNestCodeTool } from './tools/nestjs/reviewNestCode.js';
 import { analyzeArchitectureTool } from './tools/nestjs/analyzeArchitecture.js';
 import { securityReviewTool } from './tools/nestjs/securityReview.js';
@@ -12,6 +10,9 @@ import { reviewNextjsCodeTool } from './tools/nextjs/reviewNestCode.js';
 import { analyzeNextjsArchitectureTool } from './tools/nextjs/analyzeArchitecture.js';
 import { performanceNextjsReviewTool } from './tools/nextjs/performanceReview.js';
 import { securityNextjsReviewTool } from './tools/nextjs/securityReview.js';
+import { detectNextjsCodeSmellsTool } from './tools/nextjs/detectCodeSmells.js';
+import { hexagonalCheckTool } from './tools/nestjs/hexagonalCheck.js';
+import { dddBoundaryCheckTool } from './tools/nestjs/dddBoundaryCheck.js';
 
 const server = new McpServer({
 	name: 'nestjs-mcp-reviewer',
@@ -41,6 +42,30 @@ server.registerTool(
 		inputSchema: securityReviewTool.inputSchema,
 	},
 	securityReviewTool.execute
+);
+server.registerTool(
+	hexagonalCheckTool.name,
+	{
+		description: hexagonalCheckTool.description,
+		inputSchema: hexagonalCheckTool.inputSchema,
+	},
+	hexagonalCheckTool.execute
+);
+server.registerTool(
+	dddBoundaryCheckTool.name,
+	{
+		description: dddBoundaryCheckTool.description,
+		inputSchema: dddBoundaryCheckTool.inputSchema,
+	},
+	dddBoundaryCheckTool.execute
+);
+server.registerTool(
+	detectCodeSmellsTool.name,
+	{
+		description: detectCodeSmellsTool.description,
+		inputSchema: detectCodeSmellsTool.inputSchema,
+	},
+	detectCodeSmellsTool.execute
 );
 
 /** NEXTJS */
@@ -80,6 +105,15 @@ server.registerTool(
 	securityNextjsReviewTool.execute
 );
 
+server.registerTool(
+	detectNextjsCodeSmellsTool.name,
+	{
+		description: detectNextjsCodeSmellsTool.description,
+		inputSchema: detectNextjsCodeSmellsTool.inputSchema,
+	},
+	detectNextjsCodeSmellsTool.execute
+);
+
 /** others */
 
 server.registerTool(
@@ -89,30 +123,6 @@ server.registerTool(
 		inputSchema: generateDocsTool.inputSchema,
 	},
 	generateDocsTool.execute
-);
-server.registerTool(
-	detectCodeSmellsTool.name,
-	{
-		description: detectCodeSmellsTool.description,
-		inputSchema: detectCodeSmellsTool.inputSchema,
-	},
-	detectCodeSmellsTool.execute
-);
-server.registerTool(
-	hexagonalCheckTool.name,
-	{
-		description: hexagonalCheckTool.description,
-		inputSchema: hexagonalCheckTool.inputSchema,
-	},
-	hexagonalCheckTool.execute
-);
-server.registerTool(
-	dddBoundaryCheckTool.name,
-	{
-		description: dddBoundaryCheckTool.description,
-		inputSchema: dddBoundaryCheckTool.inputSchema,
-	},
-	dddBoundaryCheckTool.execute
 );
 
 const transport = new StdioServerTransport();
