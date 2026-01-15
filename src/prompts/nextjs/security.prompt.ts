@@ -1,9 +1,22 @@
 export const SECURITY_NEXTJS_PROMPT = `
-Perform a security review of the Next.js code.
+Perform a comprehensive security review of the Next.js code.
 
-Check for:
-- XSS risks
-- Unsafe server-side rendering
-- Data leakage between requests
-- Missing validation in API routes
+Validate:
+- XSS (Cross-Site Scripting) risks in dynamic content rendering
+- Unsafe server-side rendering (SSR) with untrusted data
+- Data leakage between requests (shared state, session issues)
+- Missing validation in API routes (input sanitization)
+- Missing authentication/authorization in API endpoints
+- Sensitive data in client-side code or exposed in DOM
+- Unsafe external API calls and third-party integrations
+- Security headers (CSP, X-Frame-Options, etc.)
+- Environment variables exposed in client bundle
+- Naming clarity in security-critical functions/variables
+- File/folder naming doesn't expose internal structure to users
+
+Provide:
+- Vulnerability severity levels
+- Vulnerable code examples
+- Secure implementation patterns
+- Fix prioritization
 `;
