@@ -71,6 +71,12 @@ It **DOES**:
 | `generate_docs`               | Generate JSDoc / TSDoc documentation   |
 | `detect_code_smells`          | Detect design & maintainability issues |
 
+### 🔹 Project Tools
+
+| Tool                      | Description                                               |
+| ------------------------- | --------------------------------------------------------- |
+| `initialize_project_docs` | Initialize docs folder in your project with all templates |
+
 ---
 
 ## � Recommended Execution Order
