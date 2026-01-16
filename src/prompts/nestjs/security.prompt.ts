@@ -2,21 +2,19 @@ export const SECURITY_REVIEW_PROMPT = `
 Perform a comprehensive security-focused review of the NestJS code.
 
 Validate:
-- Input validation (all user inputs, query params, body data)
-- Missing or weak authentication/authorization guards
-- Unsafe error handling (exposing sensitive info in error messages)
-- Sensitive data exposure (logging passwords, tokens, PII)
-- SQL injection risks (raw queries without parameterization)
+- Input validation and sanitization (user inputs, query params, body data)
+- Authentication and authorization guards (proper protection of endpoints)
+- Sensitive data exposure: passwords, tokens, PII in logs, error messages, or code
+- Secret management: hardcoded secrets, improper environment variable usage
+- SQL injection risks and unsafe database queries (use parameterized queries)
 - Insecure or outdated dependencies
-- Missing CORS, CSRF, rate limiting protections
-- Improper secret management (hardcoded secrets)
-- Method-level naming clarity and intent
-- File/module naming doesn't expose security-sensitive operations
+- Security headers and protections (CORS, CSRF, rate limiting)
+- Error handling: avoid exposing internal structure or sensitive information
 
 Assume this code is part of a public API.
 
 Provide:
-- Severity level for each vulnerability
+- Severity level for each vulnerability (CRITICAL | HIGH | MEDIUM | LOW)
 - Code examples of vulnerable patterns
 - Secure implementation examples
 - Remediation steps

@@ -2,19 +2,18 @@ export const SMELLS_NEXTJS_PROMPT = `
 Detect code smells in the provided code.
 
 Look for:
-- God classes / God components
-- Long methods / Long functions
-- Duplicated logic
-- Mixed responsibilities
-- Tight coupling
-- Props drilling (in React/NextJS)
-- Unnecessary re-renders (in React/NextJS)
+- God components (too many responsibilities)
+- Long functions or deeply nested logic
+- Duplicated or mixed responsibilities (violates DRY/SRP)
+- Tight coupling and props drilling
+- Unnecessary re-renders
+- Over-engineered or premature abstractions
 
-For React/NextJS code:
-- PREFER: Functional components with hooks
-- AVOID: Class components (use hooks instead since React 16.8)
-- Check: Custom hooks for logic reuse
-- Suggest: Context API or state management for deeply nested data
+React/NextJS specific:
+- Prefer functional components with hooks over class components
+- Identify custom hooks for logic reuse opportunities
+- Suggest Context API or state management instead of props drilling
+- Check for performance anti-patterns
 
-Explain each smell and its long-term impact.
+Explain each smell and its long-term impact on maintainability and scalability.
 `;

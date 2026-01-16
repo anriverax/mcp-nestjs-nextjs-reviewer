@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { generateDocsTool } from './tools/generateDocs.js';
+import { generateJsDocsTool } from './tools/jsDocs.js';
 import { detectCodeSmellsTool } from './tools/nestjs/detectCodeSmells.js';
 import { reviewNestCodeTool } from './tools/nestjs/reviewNestCode.js';
 import { analyzeArchitectureTool } from './tools/nestjs/analyzeArchitecture.js';
@@ -14,6 +14,7 @@ import { detectNextjsCodeSmellsTool } from './tools/nextjs/detectCodeSmells.js';
 import { hexagonalCheckTool } from './tools/nestjs/hexagonalCheck.js';
 import { dddBoundaryCheckTool } from './tools/nestjs/dddBoundaryCheck.js';
 import { initializeProjectDocsTool } from './tools/initializeProjectDocs.js';
+import { generateDocsTool } from './tools/markdownDocs.js';
 
 const server = new McpServer({
 	name: 'nestjs-mcp-reviewer',
@@ -116,6 +117,15 @@ server.registerTool(
 );
 
 /** others */
+
+server.registerTool(
+	generateJsDocsTool.name,
+	{
+		description: generateJsDocsTool.description,
+		inputSchema: generateJsDocsTool.inputSchema,
+	},
+	generateJsDocsTool.execute
+);
 
 server.registerTool(
 	generateDocsTool.name,

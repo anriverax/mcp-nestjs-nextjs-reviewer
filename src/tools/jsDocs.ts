@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { GENERATE_DOCS_PROMPT } from '../prompts/docs.prompt.js';
 import { MARKDOWN_OUTPUT_PROMPT } from '../prompts/base/markdown.prompt.js';
 import { autoInitializeProjectDocs } from './initializeProjectDocs.js';
+import { GENERATE_JSDOC_PROMPT } from '../prompts/jsdoc.prompt.js';
 
-export const generateDocsTool = {
+export const generateJsDocsTool = {
 	name: 'generate_jsdoc_docs',
 	description: 'Generates professional JSDoc/TSDoc documentation.',
 	inputSchema: z.object({
@@ -13,7 +13,7 @@ export const generateDocsTool = {
 	async execute({ code }: { code: string }, _extra: any) {
 		// Auto-initialize project docs
 		await autoInitializeProjectDocs();
-		const text = `${MARKDOWN_OUTPUT_PROMPT}\n\n${GENERATE_DOCS_PROMPT}\n\n### CODE\n\`\`\`ts\n${code}\n\`\`\``;
+		const text = `${MARKDOWN_OUTPUT_PROMPT}\n\n${GENERATE_JSDOC_PROMPT}\n\n### CODE\n\`\`\`ts\n${code}\n\`\`\``;
 
 		return {
 			content: [

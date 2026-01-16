@@ -3,24 +3,20 @@ Carefully review the following Next.js code using a STRUCTURED AND REPRODUCIBLE 
 
 Provide a detailed technical evaluation in this EXACT order:
 
-1. **Next.js best practices and conventions**
-2. **Component structure and composition**
-3. **Rendering strategy** (SSR, CSR, SSG, ISR appropriateness)
-4. **Performance optimizations**
-5. **Client/Server component boundaries**
-6. **Hook usage and state management**
-7. **Naming and reusability**
-8. **Potential bugs or rendering issues**
+1. **Next.js conventions and best practices**
+2. **Component structure, composition, and rendering strategy** (SSR, CSR, SSG, ISR appropriateness)
+3. **Client/Server component boundaries and performance optimizations**
+4. **Hook usage and state management**
+5. **Naming conventions and reusability**
+6. **Potential bugs or rendering issues**
 
 For EACH section, provide:
-- A clear statement of what you found
+- Clear statement of what you found with specific location/context if applicable
 - Status: GOOD ✓ | NEEDS IMPROVEMENT ⚠️ | PROBLEMATIC ✗
-- Specific location/context if applicable
 - Impact level: CRITICAL | HIGH | MEDIUM | LOW
 
 Finally provide:
-- A prioritized list of improvements (sorted by impact)
-- Code examples with corrections
+- Prioritized list of improvements (sorted by impact) with code examples
 - Executive summary of code state
 
 DETERMINISM RULE: The same code must always receive the same assessment structure.

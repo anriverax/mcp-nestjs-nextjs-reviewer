@@ -144,22 +144,6 @@ async function initializeDocsInPath(projectRoot: string): Promise<string> {
 		// Crear la carpeta docs si no existe
 		await fs.mkdir(docsDir, { recursive: true });
 
-		// Crear o actualizar cada archivo de documentación
-		for (const doc of DOC_DEFINITIONS) {
-			const filePath = join(docsDir, doc.filename);
-			const content = generateDocTemplate(doc);
-
-			try {
-				await fs.access(filePath);
-				// El archivo existe, no lo sobrescribimos
-				console.error(`[MCP] Documentación encontrada: ${doc.filename}`);
-			} catch {
-				// El archivo no existe, lo creamos
-				await fs.writeFile(filePath, content, 'utf-8');
-				console.error(`[MCP] Documentación creada: ${doc.filename}`);
-			}
-		}
-
 		// Crear un índice de documentación
 		await createDocsIndex(docsDir);
 
@@ -173,28 +157,6 @@ async function initializeDocsInPath(projectRoot: string): Promise<string> {
 		console.error(`[MCP] ${errorMessage}`);
 		throw error;
 	}
-}
-
-function generateDocTemplate(doc: DocDefinition): string {
-	return `# ${doc.title}
-
-## Descripción
-${doc.description}
-
-## Resumen
-Esta documentación se genera automáticamente cuando el MCP se ejecuta en tu proyecto.
-
-## Cómo Usar
-1. Ejecuta el MCP en tu proyecto
-2. Las herramientas disponibles analizarán tu código
-3. Los resultados se mostrarán en esta documentación
-
-### Framework: ${doc.framework.toUpperCase()}
-
----
-
-*Esta documentación fue generada automáticamente por MCP NestJS/NextJS Reviewer*
-`;
 }
 
 async function createDocsIndex(docsDir: string): Promise<void> {
